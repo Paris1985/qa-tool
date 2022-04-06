@@ -1,0 +1,28 @@
+{
+  "server": "hub.browserstack.com",
+  "capabilities": {
+    "build": "browserstack-build-1",
+    "name": "parallel_test",
+    "browserstack.debug": true
+  },
+  "environments": {
+    "env1": {
+      "browser": "chrome",
+      "browser_version": "latest",
+      "os": "Windows",
+      "os_version": "10"
+    },
+    "env2": {
+      "browser": "firefox",
+      "browser_version": "latest",
+      "os": "Windows",
+      "os_version": "10"
+    },
+    "env3": {
+      "browser": "safari",
+      "browser_version": "latest",
+      "os": "OS X",
+      "os_version": "Big Sur"
+    }
+  }
+}
