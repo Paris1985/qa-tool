@@ -71,8 +71,9 @@ public final class Driver {
     }
 
     private void setSaucelabs() {
-        String username = System.getProperty("SAUCE_USER");
-        String accessKey = System.getProperty("SAUCE_ACCESS_KEY");
+
+        String username = System.getProperty("USERNAME");
+        String accessKey = System.getProperty("ACCESS_KEY");
         MutableCapabilities sauceOptions = new MutableCapabilities();
         sauceOptions.setCapability("name", "Web Driver demo Test");
         sauceOptions.setCapability("tags", "tag1");
@@ -82,7 +83,7 @@ public final class Driver {
 
 
         try {
-            url = new URL("http://" + username + ":" + accessKey + "@ondemand.eu-central-1.saucelabs.com:443/wd/hub");
+            url = new URL("https://" + username + ":" + accessKey + "@ondemand.eu-central-1.saucelabs.com:443/wd/hub");
             System.out.println(url.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();
