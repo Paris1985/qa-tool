@@ -38,7 +38,7 @@ public final class Driver {
     public WebDriver getWebDriver()  {
         if (this.webDriver != null)
             return this.webDriver;
-        String browser = DriverProperty.getProperty("browser");
+        String browser = System.getProperty("REMOTE");
       
 
         if("grid-remote-browserstack".equalsIgnoreCase(browser)){
