@@ -38,7 +38,7 @@ public final class Driver {
         String browser = System.getProperty("REMOTE");
 
 
-        if("grid-remote".equalsIgnoreCase(browser)){
+        if("browserstack".equalsIgnoreCase(browser)){
             setBrowserStack();
             this.webDriver = new Augmenter().augment(
                     new RemoteWebDriver(url, capabilities));
