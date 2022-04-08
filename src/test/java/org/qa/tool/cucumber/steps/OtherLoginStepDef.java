@@ -51,7 +51,6 @@ public class OtherLoginStepDef extends BaseTest {
         webDriver.findElement(By.className("btn_action")).click();
     }
 
-    @When("^I add (\\d+) items? to the cart$")
     public void add_items_to_cart(int items){
         By itemButton = By.className("btn_primary");
 
@@ -69,7 +68,7 @@ public class OtherLoginStepDef extends BaseTest {
         webDriver.findElement(itemButton).click();
     }
 
-    @Then("I have (\\d) items? in my cart")
+
     public void one_item_in_cart(Integer items) {
         String expected_items = items.toString();
 
