@@ -41,11 +41,11 @@ public final class Driver {
         String browser = System.getProperty("REMOTE");
       
 
-        if("grid-remote-browserstack".equalsIgnoreCase(browser)){
+        if("browserstack".equalsIgnoreCase(browser)){
             setBrowserStack();
             this.webDriver = new Augmenter().augment(
                     new RemoteWebDriver(url, capabilities));
-        } else if("grid-remote-saucelabs".equalsIgnoreCase(browser)){
+        } else if("saucelabs".equalsIgnoreCase(browser)){
             setSaucelabs();
 
             FirefoxOptions firefoxOptions = new FirefoxOptions();
