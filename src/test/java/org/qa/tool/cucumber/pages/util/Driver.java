@@ -70,8 +70,8 @@ public final class Driver {
             setEnvCapabilities(envs, capabilities);
             setCommonCapabilities(config, capabilities);
 
-            String username = System.getenv("USERNAME");
-            String accessKey = System.getenv("ACCESS_KEY");
+            String username = System.getProperty("USERNAME");
+            String accessKey = System.getProperty("ACCESS_KEY");
 
             setLocal(capabilities, accessKey);
 
