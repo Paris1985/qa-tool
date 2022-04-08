@@ -5,8 +5,11 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import net.minidev.json.parser.ParseException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.openqa.selenium.MutableCapabilities;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -36,13 +39,23 @@ public final class Driver {
         if (this.webDriver != null)
             return this.webDriver;
         String browser = DriverProperty.getProperty("browser");
-        String server = DriverProperty.getProperty("server");
+      
 
-        if("grid-remote".equalsIgnoreCase(browser)){
+        if("grid-remote-browserstack".equalsIgnoreCase(browser)){
             setBrowserStack();
             this.webDriver = new Augmenter().augment(
                     new RemoteWebDriver(url, capabilities));
-        } else if("grid-local".equalsIgnoreCase(browser)){
+        } else if("grid-remote-saucelabs".equalsIgnoreCase(browser)){
+            setSaucelabs();
+
+            FirefoxOptions firefoxOptions = new FirefoxOptions();
+            firefoxOptions.setCapability("platformName", "Windows 10");
+            firefoxOptions.setCapability("browserVersion", "79.0");
+
+            this.webDriver = new Augmenter().augment(
+                    new RemoteWebDriver(url, firefoxOptions));
+        }
+        else if("grid-local".equalsIgnoreCase(browser)){
             try {
                 EdgeOptions edgeOptions =  new EdgeOptions();
 
@@ -55,6 +68,25 @@ public final class Driver {
             this.webDriver = WebDriverManager.getInstance(browser).create();
         }
         return this.webDriver;
+    }
+
+    private void setSaucelabs() {
+        String username = System.getProperty("SAUCE_USER");
+        String accessKey = System.getProperty("SAUCE_ACCESS_KEY");
+        MutableCapabilities sauceOptions = new MutableCapabilities();
+        sauceOptions.setCapability("name", "Web Driver demo Test");
+        sauceOptions.setCapability("tags", "tag1");
+        sauceOptions.setCapability("build", "build-1234");
+        sauceOptions.setCapability("username", username);
+        sauceOptions.setCapability("accessKey", accessKey);
+
+
+        try {
+            url = new URL("http://" + username + ":" + accessKey + "@ondemand.eu-central-1.saucelabs.com:443/wd/hub");
+            System.out.println(url.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setBrowserStack() {
@@ -70,9 +102,11 @@ public final class Driver {
             setEnvCapabilities(envs, capabilities);
             setCommonCapabilities(config, capabilities);
 
-            String username = System.getenv("USERNAME");
-            String accessKey = System.getenv("ACCESS_KEY");
+            String username = System.getProperty("USERNAME");
+            String accessKey = System.getProperty("ACCESS_KEY");
 
+            System.out.println("username: " + username);
+            System.out.println("access key: " + accessKey);
             setLocal(capabilities, accessKey);
 
            url = new URL("http://" + username + ":" + accessKey + "@" + config.get("server") + "/wd/hub");
