@@ -8,7 +8,7 @@ import org.junit.BeforeClass;
 @CucumberOptions(
         features = "classpath:features",
         glue = {"org.qa.tool.cucumber.steps" },
-        plugin = {"pretty", "json:target/report.json"},
+        plugin = {"pretty", "html:target/cucumber.html", "json:target/cucumber.json"},
         publish = true)
 public class CucumberTest extends AbstractTestNGCucumberTests {
     @BeforeClass
