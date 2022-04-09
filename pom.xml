@@ -242,6 +242,11 @@
             <artifactId>sauce_bindings</artifactId>
             <version>${sauce.version}</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>net.masterthought</groupId>-->
+<!--            <artifactId>cucumber-reporting</artifactId>-->
+<!--            <version>(check version above)</version>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>
