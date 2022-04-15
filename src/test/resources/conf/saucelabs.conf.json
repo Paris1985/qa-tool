@@ -1,6 +1,9 @@
 {
+  "server": "ondemand.eu-central-1.saucelabs.com:443/wd/hub",
+
   "capabilities": {
     "build": "browserstack-build-1"
+
   },
 
   "environments": {

@@ -1,21 +1,17 @@
 package org.qa.tool.cucumber.pages.util;
-
-import com.browserstack.local.Local;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import net.minidev.json.parser.ParseException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.edge.EdgeOptions;
-import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.SessionId;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
+import java.security.InvalidParameterException;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -24,77 +20,97 @@ public final class Driver {
     private final static Driver browser = new Driver();
     private WebDriver webDriver;
     private URL url;
-    private DesiredCapabilities capabilities;
+    private SessionId sessionId;
+    private DesiredCapabilities capabilities = new DesiredCapabilities();
+
     private Driver() {
+    }
+    public void setDesiredCapability(String name, String value) {
+        capabilities.setCapability(name, value);
     }
 
     public static Driver getInstance() {
         return browser;
     }
 
-    public WebDriver getWebDriver()  {
+    public WebDriver getWebDriver() {
         if (this.webDriver != null)
             return this.webDriver;
-        String browser = System.getProperty("REMOTE");
+        String remote = System.getProperty("REMOTE");
+        String browser = System.getProperty("BROWSER");
+        String confFile = "";
 
-
-        if("browserstack".equalsIgnoreCase(browser)){
-            setBrowserStack();
-            this.webDriver = new Augmenter().augment(
-                    new RemoteWebDriver(url, capabilities));
-        } else if("grid-local".equalsIgnoreCase(browser)){
-            try {
-                EdgeOptions edgeOptions =  new EdgeOptions();
-
-                this.webDriver = new Augmenter().augment(
-                        new RemoteWebDriver(new URL("http://192.168.100.20:4444/" ), edgeOptions));
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
+        if ("browserstack".equalsIgnoreCase(remote)) {
+            confFile = "browser_stack.conf.json";
+        } else if ("saucelabs".equalsIgnoreCase(remote)) {
+            confFile = "saucelabs.conf.json";
+        } else if ("grid-local".equalsIgnoreCase(remote)) {
+            confFile = "local.conf.json";
         } else {
             this.webDriver = WebDriverManager.getInstance(browser).create();
+            return this.webDriver;
         }
+
+        if(confFile == null){
+            throw new InvalidParameterException("conf not found");
+        }
+
+        setProperties(confFile, browser);
+        this.webDriver = new RemoteWebDriver(url, capabilities);
+        this.sessionId = ((RemoteWebDriver) this.webDriver).getSessionId();
         return this.webDriver;
     }
 
-    public void setBrowserStack() {
+       private void setProperties(String conf, String browser) {
 
         JSONParser parser = new JSONParser();
         JSONObject config = null;
         try {
-            config = (JSONObject) parser.parse(new FileReader("src/test/resources/conf/suite.conf.json"));
+            config = (JSONObject) parser.parse(new FileReader("src/test/resources/conf/"+ conf));
             JSONObject envs = (JSONObject) config.get("environments");
 
-            capabilities = new DesiredCapabilities();
-
-            setEnvCapabilities(envs, capabilities);
+            setEnvCapabilities(envs, capabilities, browser);
             setCommonCapabilities(config, capabilities);
+            setRemoteUrl(config);
 
-            String username = System.getProperty("USERNAME");
-            String accessKey = System.getProperty("ACCESS_KEY");
-
-            setLocal(capabilities, accessKey);
-
-           url = new URL("http://" + username + ":" + accessKey + "@" + config.get("server") + "/wd/hub");
-        } catch (ParseException | FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
-    }
-    private void setLocal(DesiredCapabilities capabilities, String accessKey) throws Exception {
-        Local l;
-        if (capabilities.getCapability("browserstack.local") != null
-                && capabilities.getCapability("browserstack.local") == "true") {
-            l = new Local();
-            Map<String, String> options = new HashMap<String, String>();
-            options.put("key", accessKey);
-            l.start(options);
+    private void setRemoteUrl(JSONObject config) throws MalformedURLException {
+        String username = System.getProperty("USERNAME");
+        if(username == null) {
+            username = System.getenv("USERNAME") ;
         }
+        String accessKey = System.getProperty("ACCESS_KEY");
+        if(accessKey == null) {
+            accessKey =  System.getProperty("ACCESS_KEY");
+        }
+
+        String server = System.getProperty("SERVER");
+
+        if(server == null) {
+            server = System.getenv("SERVER") ;
+        }
+
+        if(server == null) {
+            server = (String) config.get("server");
+        }
+
+        if(username == null || accessKey == null || server == null){
+            throw new MalformedURLException("Missing username and access key");
+        }
+
+        url = new URL("https://" + username + ":" + accessKey + "@" + server);
+        System.out.println(url.toString());
     }
+
+
 
     private void setCommonCapabilities(JSONObject config, DesiredCapabilities capabilities) {
         Iterator it;
@@ -109,12 +125,20 @@ public final class Driver {
         }
     }
 
-    private void setEnvCapabilities(JSONObject envs, DesiredCapabilities capabilities) {
-        Map<String, String> envCapabilities = (Map<String, String>) envs.get("chrome");
+    private void setEnvCapabilities(JSONObject envs, DesiredCapabilities capabilities, String browser) {
+        Map<String, String> envCapabilities = (Map<String, String>) envs.get(browser);
         Iterator it = envCapabilities.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
             capabilities.setCapability(pair.getKey().toString(), pair.getValue().toString());
         }
+    }
+    public void exit(){
+        if(webDriver != null) {
+            webDriver.quit();
+        }
+    }
+    public String getSessionId() {
+       return sessionId.toString();
     }
 }
