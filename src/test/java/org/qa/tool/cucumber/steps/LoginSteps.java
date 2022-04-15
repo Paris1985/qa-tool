@@ -19,6 +19,11 @@ public class LoginSteps extends BaseTest {
 
     private LoginPage loginPage;
 
+    @Before
+    public void before(Scenario scenario) {
+        super.before(scenario);
+    }
+
     @Given("User is in the login page")
     public void goToLogin() {
         loginPage = new LoginPage();
@@ -35,5 +40,9 @@ public class LoginSteps extends BaseTest {
         then(confirmationText).isEqualTo("Logout");
     }
 
+    @After
+    public void after(Scenario scenario) {
+        super.after(scenario);
+    }
 
 }

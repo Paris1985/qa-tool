@@ -1,6 +1,9 @@
 {
+  "server": "hub-cloud.browserstack.com/wd/hub",
+
   "capabilities": {
-    "build": "browserstack-build-1"
+    "build": "browserstack-build-1",
+    "browserstack.debug": true
   },
 
   "environments": {

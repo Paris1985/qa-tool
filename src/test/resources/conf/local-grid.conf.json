@@ -1,9 +1,11 @@
 {
-  "server": "hub-cloud.browserstack.com",
+  "server": "http://localhost:4444/",
+
   "capabilities": {
     "build": "browserstack-build-1",
-    "name": "suite_test",
-    "browserstack.debug": true
+    "name": "local_test",
+    "browserstack.debug": true,
+    "browserstack.local": true
   },
 
   "environments": {
