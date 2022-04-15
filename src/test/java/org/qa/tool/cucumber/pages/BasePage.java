@@ -3,7 +3,7 @@ package org.qa.tool.cucumber.pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
-import org.qa.tool.cucumber.pages.util.Driver;
+import org.qa.tool.cucumber.base.util.Driver;
 
 public class BasePage {
     protected String url;

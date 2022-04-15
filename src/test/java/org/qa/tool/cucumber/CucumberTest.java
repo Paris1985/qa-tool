@@ -4,7 +4,7 @@ package org.qa.tool.cucumber;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 import org.junit.AfterClass;
-import org.qa.tool.cucumber.pages.util.Driver;
+import org.qa.tool.cucumber.base.util.Driver;
 
 @CucumberOptions(
         features = "classpath:features",

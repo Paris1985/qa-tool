@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.qa.tool.cucumber.pages.util.PageWait;
+import org.qa.tool.cucumber.base.util.PageWait;
 
 import java.time.Duration;
 

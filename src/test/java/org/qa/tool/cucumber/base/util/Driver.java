@@ -1,4 +1,4 @@
-package org.qa.tool.cucumber.pages.util;
+package org.qa.tool.cucumber.base.util;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

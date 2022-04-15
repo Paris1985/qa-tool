@@ -1,4 +1,4 @@
-package org.qa.tool.cucumber.pages.util;
+package org.qa.tool.cucumber.base.util;
 
 
 import java.io.FileInputStream;
