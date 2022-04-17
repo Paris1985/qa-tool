@@ -1,11 +1,14 @@
 package org.qa.tool.cucumber.base.util;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.SessionId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -16,6 +19,9 @@ import java.util.Iterator;
 import java.util.Map;
 
 public final class Driver {
+
+    private Logger logger = LoggerFactory.getLogger(Driver.class);
+    private static String DEFAULT_BROWSER = "chrome";
 
     private final static Driver browser = new Driver();
     private WebDriver webDriver;
@@ -36,6 +42,7 @@ public final class Driver {
     public WebDriver getWebDriver() {
         if (this.webDriver != null)
             return this.webDriver;
+
         String remote = System.getProperty("REMOTE");
         String browser = System.getProperty("BROWSER");
         String confFile = "";
@@ -44,14 +51,18 @@ public final class Driver {
             confFile = "browser_stack.conf.json";
         } else if ("saucelabs".equalsIgnoreCase(remote)) {
             confFile = "saucelabs.conf.json";
-        } else if ("grid-local".equalsIgnoreCase(remote)) {
+        } else if ("local_grid".equalsIgnoreCase(remote)) {
             confFile = "local.conf.json";
         } else {
+            if(StringUtils.isBlank(browser)) {
+                browser = DEFAULT_BROWSER;
+                logger.warn("Default chrome browser is used. Use -DBROWSER=${browser} to target a browser");
+            }
             this.webDriver = WebDriverManager.getInstance(browser).create();
             return this.webDriver;
         }
 
-        if(confFile == null){
+        if(StringUtils.isBlank(confFile)){
             throw new InvalidParameterException("conf not found");
         }
 
@@ -107,7 +118,6 @@ public final class Driver {
         }
 
         url = new URL("https://" + username + ":" + accessKey + "@" + server);
-        System.out.println(url.toString());
     }
 
 

@@ -1,26 +1,32 @@
-
-#browserstack https://automate.browserstack.com/
+# 1. Prerequisite 
+<strong>Remote Grid Server: </strong> Create saucelabs or browserstack account for remote server<br>
+<strong>Local Grid Server: </strong> setup grid server on your local machine<br>
+<strong>Stand Alone:</strong> go to #6 
+# 2. browserstack https://automate.browserstack.com/
+<strong>command: </strong>
 mvn clean test -Dtest="org.qa.tool.cucumber.CucumberTest" -DACCESS_KEY=${access key} -DUSERNAME=${username} -DSERVER=${server} -DREMOTE=browserstack -DBROWSER=${browser}
-#saucelabs https://saucelabs.com/
+# 3. saucelabs https://saucelabs.com/
+<strong>command: </strong>
 mvn clean test -Dtest="org.qa.tool.cucumber.CucumberTest" -DACCESS_KEY=${access key} -DUSERNAME=${username} -DSERVER=${server} -DREMOTE=saucelabs -DBROWSER=${browser}
-#To Run in local grid
-prerequisite : 
-Grid server is running locally
-mvn clean test -Dtest="org.qa.tool.cucumber.CucumberTest" -DBROWSER=${browser}
-#To Run in stand alone webdriver
+# 5. To Run in local grid
+<strong>prerequisite : </strong>
+Grid server is running locally <br>
+<strong>command: </strong>
+mvn clean test -Dtest="org.qa.tool.cucumber.CucumberTest" -DREMOTE=${local_grid} -DBROWSER=${browser}
+# 6. To Run in stand alone webdriver 
+-check #7 for browser options
 mvn clean test -Dtest="org.qa.tool.cucumber.CucumberTest" -DBROWSER=${browser}
 
-#browser value options 
-edge,
-chrome,
-firefox,
-safari,
+# 7. browser value options 
+edge <br>
+chrome <br>
+firefox </br>
+safari </br>
 ie
+# 8. server examples -please check remote server account for details
+<strong>browserstack:</strong> hub-cloud.browserstack.com/wd/hub <br>
+<strong>saucelabs:</strong> ondemand.eu-central-1.saucelabs.com:443/wd/hub
 
-#server examples -please check remote server account for details
-browserstack: hub-cloud.browserstack.com/wd/hub
-saucelabs: ondemand.eu-central-1.saucelabs.com:443/wd/hub
 
-#Provide Username and Access Key in the -D options or setup in environment variables
 
 
