@@ -19,6 +19,9 @@
     },
     "ie": {
       "browserName": "internet explorer"
+    },
+    "edge": {
+      "browserName": "MicrosoftEdge"
     }
   }
 }
