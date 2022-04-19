@@ -3,12 +3,15 @@ package org.qa.tool.cucumber.base;
 
 import com.google.gson.Gson;
 import io.cucumber.java.Scenario;
+import junit.framework.TestResult;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.qa.tool.cucumber.base.util.Driver;
 
 
+import java.net.MalformedURLException;
 import java.util.Collection;
+import java.util.Objects;
 
 public class BaseTest {
 
@@ -42,20 +45,21 @@ public class BaseTest {
             webDriver.get(url);
         }
     }
+    public void markTestStatus()  {
+        TestResult result = new TestResult();
+        JavascriptExecutor jse = (JavascriptExecutor) webDriver;
 
-    public void markTestStatus(String status, String reason) {
-        JavascriptExecutor jse = (JavascriptExecutor)webDriver;
-
-        if (System.getProperty("REMOTE").equalsIgnoreCase("browserstack")) {
-            jse.executeScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\": \"" + status + "\", \"reason\": \"" + reason + "\"}}");
+        if (System.getProperty("REMOTE").equalsIgnoreCase("browserstack") ) {
+            jse.executeScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\": \""+ (result.wasSuccessful() ? "passed" : "failed") + "\"}}");
         }
         else{
-            jse.executeScript("sauce:job-result=" + status);
+            jse.executeScript("sauce:job-result=" + (result.wasSuccessful() ? "passed" : "failed"));
         }
 
-        }
+    }
 
     public void after(Scenario scenario) {
+        markTestStatus();
         webDriver.quit();
         webDriver = Driver.getInstance().getWebDriver();
     }
