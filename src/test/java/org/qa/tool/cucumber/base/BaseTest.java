@@ -50,7 +50,7 @@ public class BaseTest {
         JavascriptExecutor jse = (JavascriptExecutor) webDriver;
 
         if (System.getProperty("REMOTE").equalsIgnoreCase("browserstack") ) {
-            jse.executeScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\": \""+ (result.wasSuccessful() ? "passed" : "failed") + "\"}}");
+            jse.executeScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\": \""+ (result.wasSuccessful() ? "passed" : "failed") + "\", \"reason\": \"" + (result.wasSuccessful() ? "successful" : "not successful") + "\"}}");
         }
         else{
             jse.executeScript("sauce:job-result=" + (result.wasSuccessful() ? "passed" : "failed"));
