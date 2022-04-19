@@ -33,7 +33,7 @@
         <spring-boot.version>2.6.6</spring-boot.version>
         <appium.version>8.0.0</appium.version>
         <rest-assured.version>5.0.0</rest-assured.version>
-        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M6</maven-surefire-plugin.version>
         <project.encondig>UTF-8</project.encondig>
         <project.build.sourceEncoding>${project.encondig}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${project.encondig}</project.reporting.outputEncoding>

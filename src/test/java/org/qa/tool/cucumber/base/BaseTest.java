@@ -3,6 +3,7 @@ package org.qa.tool.cucumber.base;
 
 import com.google.gson.Gson;
 import io.cucumber.java.Scenario;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.qa.tool.cucumber.base.util.Driver;
 
@@ -42,7 +43,20 @@ public class BaseTest {
         }
     }
 
+    public void markTestStatus(String status, String reason) {
+        JavascriptExecutor jse = (JavascriptExecutor)webDriver;
+
+        if (System.getProperty("REMOTE").equalsIgnoreCase("browserstack")) {
+            jse.executeScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\": \"" + status + "\", \"reason\": \"" + reason + "\"}}");
+        }
+        else{
+            jse.executeScript("sauce:job-result=" + status);
+        }
+
+        }
+
     public void after(Scenario scenario) {
+        webDriver.quit();
         webDriver = Driver.getInstance().getWebDriver();
     }
 }

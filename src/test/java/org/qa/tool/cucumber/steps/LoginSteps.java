@@ -37,7 +37,12 @@ public class LoginSteps extends BaseTest {
     @And("User user should be able to login")
     public void verifyLogin() {
         String confirmationText = loginPage.getLoginConfirmation1();
-        then(confirmationText).isEqualTo("Logout");
+        if (confirmationText.equalsIgnoreCase("Logout")){
+            markTestStatus("passed","Login Successfully");
+        }
+        else {
+            markTestStatus("failed","Login Unsuccessfully");
+        }
     }
 
     @After
