@@ -35,10 +35,14 @@ public class LoginSteps extends BaseTest {
     public void validLogin() {
         loginPage.login("qacore","qacore@123");
     }
-    @When("User logins with invalid credential")
-    public void invalidLogin() {
-        loginPage.login("qacore","qacore@1234");
-    }
+//    @When("User logins with invalid credential")
+//    public void invalidLogin() {
+//        loginPage.login("qacore","qacore@1234");
+//    }
+//    @When("User logins with valid {string} and {string}")
+//    public void login(String username, String password){
+//        loginPage.login(username,password);
+//    }
 
     @Then("User should be able to login")
     public void verifyLogin() {
@@ -47,11 +51,11 @@ public class LoginSteps extends BaseTest {
         }
 
 
-    @Then("User should not be able to login")
-    public void verifyInvalidLogin() {
-        String confirmationText = loginPage.getInvalidLoginConfirmation();
-        then(confirmationText).containsIgnoringCase("error");
-    }
+//    @Then("User should not be able to login")
+//    public void verifyInvalidLogin() {
+//        String confirmationText = loginPage.getInvalidLoginConfirmation();
+//        then(confirmationText).containsIgnoringCase("error");
+//    }
 
     @After
     public void after(Scenario scenario){
