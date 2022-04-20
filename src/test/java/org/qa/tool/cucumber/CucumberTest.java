@@ -16,11 +16,11 @@ import org.testng.annotations.DataProvider;
 )
 public class CucumberTest extends AbstractTestNGCucumberTests {
 
-    @Override
-    @DataProvider()
-    public Object[][] scenarios(){
-        return super.scenarios();
-    }
+//    @Override
+//    @DataProvider()
+//    public Object[][] scenarios(){
+//        return super.scenarios();
+//    }
 
     @AfterClass
     public static void cleanup() {
