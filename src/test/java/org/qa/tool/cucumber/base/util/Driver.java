@@ -1,5 +1,7 @@
 package org.qa.tool.cucumber.base.util;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.openqa.selenium.WebDriver;
@@ -7,7 +9,6 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.SessionId;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -18,6 +19,7 @@ import java.util.Map;
 public final class Driver {
 
     private final static Driver browser = new Driver();
+    private static final String DEFAULT_BROWSER = "chrome";
     private WebDriver webDriver;
     private URL url;
     private SessionId sessionId;
@@ -25,6 +27,7 @@ public final class Driver {
 
     private Driver() {
     }
+
     public void setDesiredCapability(String name, String value) {
         capabilities.setCapability(name, value);
     }
@@ -47,11 +50,14 @@ public final class Driver {
         } else if ("grid-local".equalsIgnoreCase(remote)) {
             confFile = "local.conf.json";
         } else {
+            if(StringUtils.isBlank(browser)) {
+                browser = DEFAULT_BROWSER;
+            }
             this.webDriver = WebDriverManager.getInstance(browser).create();
             return this.webDriver;
         }
 
-        if(confFile == null){
+        if (StringUtils.isBlank(confFile)) {
             throw new InvalidParameterException("conf not found");
         }
 
@@ -61,22 +67,18 @@ public final class Driver {
         return this.webDriver;
     }
 
-       private void setProperties(String conf, String browser) {
+    private void setProperties(String conf, String browser) {
 
         JSONParser parser = new JSONParser();
         JSONObject config = null;
         try {
-            config = (JSONObject) parser.parse(new FileReader("src/test/resources/conf/"+ conf));
+            config = (JSONObject) parser.parse(new FileReader("src/test/resources/conf/" + conf));
             JSONObject envs = (JSONObject) config.get("environments");
 
             setEnvCapabilities(envs, capabilities, browser);
             setCommonCapabilities(config, capabilities);
             setRemoteUrl(config);
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -84,25 +86,25 @@ public final class Driver {
 
     private void setRemoteUrl(JSONObject config) throws MalformedURLException {
         String username = System.getProperty("USERNAME");
-        if(username == null) {
-            username = System.getenv("USERNAME") ;
+        if (username == null) {
+            username = System.getenv("USERNAME");
         }
         String accessKey = System.getProperty("ACCESS_KEY");
-        if(accessKey == null) {
-            accessKey =  System.getProperty("ACCESS_KEY");
+        if (accessKey == null) {
+            accessKey = System.getProperty("ACCESS_KEY");
         }
 
         String server = System.getProperty("SERVER");
 
-        if(server == null) {
-            server = System.getenv("SERVER") ;
+        if (server == null) {
+            server = System.getenv("SERVER");
         }
 
-        if(server == null) {
+        if (server == null) {
             server = (String) config.get("server");
         }
 
-        if(username == null || accessKey == null || server == null){
+        if (username == null || accessKey == null || server == null) {
             throw new MalformedURLException("Missing username and access key");
         }
 
@@ -111,14 +113,13 @@ public final class Driver {
     }
 
 
-
     private void setCommonCapabilities(JSONObject config, DesiredCapabilities capabilities) {
-        Iterator it;
+        Iterator<Map.Entry<String, String>> it;
 
         Map<String, String> commonCapabilities = (Map<String, String>) config.get("capabilities");
         it = commonCapabilities.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry) it.next();
+            Map.Entry<String, String> pair = it.next();
             if (capabilities.getCapability(pair.getKey().toString()) == null) {
                 capabilities.setCapability(pair.getKey().toString(), pair.getValue().toString());
             }
@@ -127,18 +128,20 @@ public final class Driver {
 
     private void setEnvCapabilities(JSONObject envs, DesiredCapabilities capabilities, String browser) {
         Map<String, String> envCapabilities = (Map<String, String>) envs.get(browser);
-        Iterator it = envCapabilities.entrySet().iterator();
+        Iterator<Map.Entry<String, String>> it = envCapabilities.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry) it.next();
+            Map.Entry<String, String> pair = it.next();
             capabilities.setCapability(pair.getKey().toString(), pair.getValue().toString());
         }
     }
-    public void exit(){
-        if(webDriver != null) {
+
+    public void exit() {
+        if (webDriver != null) {
             webDriver.quit();
         }
     }
+
     public String getSessionId() {
-       return sessionId.toString();
+        return sessionId.toString();
     }
 }

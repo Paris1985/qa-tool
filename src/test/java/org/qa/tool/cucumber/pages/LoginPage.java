@@ -36,12 +36,4 @@ public class LoginPage extends BasePage {
         return webElement.getText();
     }
 
-    public String getLoginConfirmation1() {
-
-        WebElement webElement = PageWait.getInstance().waitForElementExist(By.xpath(logoutXpath),
-                Duration.ofSeconds(20),
-                Duration.ofSeconds(5),
-                NoSuchElementException.class);
-        return webElement.getText();
-    }
 }

@@ -13,7 +13,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElemen
 
 public final class PageWait {
     private final static PageWait wait = new PageWait();
-    protected WebDriver webDriver;
+    private WebDriver webDriver;
     private PageWait() {
         webDriver = Driver.getInstance().getWebDriver();
     }
@@ -22,14 +22,6 @@ public final class PageWait {
     }
     public WebElement waitForElementExist(By locator, Duration duration){
         WebDriverWait wait = new WebDriverWait(webDriver, duration);
-        return wait.until(presenceOfElementLocated(locator));
-    }
-
-    public WebElement waitForElementExist(By locator, Duration timeout, Duration interval, Class exception){
-        Wait<WebDriver> wait = new FluentWait<>(webDriver)
-                .withTimeout(timeout)
-                .pollingEvery(interval)
-                .ignoring(exception);
         return wait.until(presenceOfElementLocated(locator));
     }
 }

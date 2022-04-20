@@ -1,3 +1,4 @@
+@UI
 Feature: Login in practice site
   @Login
   Scenario: Successful login
