@@ -72,7 +72,7 @@ public final class Driver {
         return this.webDriver;
     }
 
-       private void setProperties(String conf, String browser) {
+    private void setProperties(String conf, String browser) {
 
         JSONParser parser = new JSONParser();
         JSONObject config = null;
@@ -149,6 +149,6 @@ public final class Driver {
         }
     }
     public String getSessionId() {
-       return sessionId.toString();
+        return sessionId.toString();
     }
 }

@@ -7,11 +7,8 @@ import junit.framework.TestResult;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.qa.tool.cucumber.base.util.Driver;
-
-
-import java.net.MalformedURLException;
 import java.util.Collection;
-import java.util.Objects;
+
 
 public class BaseTest {
 
@@ -45,6 +42,7 @@ public class BaseTest {
             webDriver.get(url);
         }
     }
+
     public void markTestStatus()  {
         TestResult result = new TestResult();
         JavascriptExecutor jse = (JavascriptExecutor) webDriver;
@@ -55,12 +53,11 @@ public class BaseTest {
         else{
             jse.executeScript("sauce:job-result=" + (result.wasSuccessful() ? "passed" : "failed"));
         }
-
     }
 
     public void after(Scenario scenario) {
-        markTestStatus();
-        webDriver.quit();
-        webDriver = Driver.getInstance().getWebDriver();
+       markTestStatus();
+        close(scenario);
+        //webDriver = Driver.getInstance().getWebDriver();
     }
 }

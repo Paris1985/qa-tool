@@ -44,4 +44,13 @@ public class LoginPage extends BasePage {
                 NoSuchElementException.class);
         return webElement.getText();
     }
+
+    public String getInvalidLoginConfirmation() {
+        String error = "//strong[normalize-space()='ERROR']";
+        WebElement webElement = PageWait.getInstance().waitForElementExist(By.xpath(error),
+                Duration.ofSeconds(20),
+                Duration.ofSeconds(5),
+                NoSuchElementException.class);
+        return webElement.getText();
+    }
 }

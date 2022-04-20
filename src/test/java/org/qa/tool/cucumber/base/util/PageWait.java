@@ -15,7 +15,7 @@ public final class PageWait {
     private PageWait() {
         webDriver = Driver.getInstance().getWebDriver();
     }
-    public static PageWait getInstance(){
+    public  static PageWait getInstance(){
         return wait;
     }
     public WebElement waitForElementExist(By locator, Duration duration){
