@@ -11,16 +11,15 @@ import org.testng.annotations.DataProvider;
 
 @CucumberOptions(features = "classpath:features",
         glue = "org.qa.tool.cucumber.steps",
-        plugin = {"pretty", "html:target/cucumber.html", "json:target/cucumber.json"},
-        tags = ("@SmokeTest1")
+        plugin = {"pretty", "html:target/cucumber.html", "json:target/cucumber.json"}
 )
 public class CucumberTest extends AbstractTestNGCucumberTests {
 
-//    @Override
-//    @DataProvider()
-//    public Object[][] scenarios(){
-//        return super.scenarios();
-//    }
+    @Override
+    @DataProvider()
+    public Object[][] scenarios(){
+        return super.scenarios();
+    }
 
     @AfterClass
     public static void cleanup() {
