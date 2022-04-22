@@ -138,6 +138,7 @@ public final class Driver {
     public void exit() {
         if (webDriver != null) {
             webDriver.quit();
+            webDriver = null;
         }
     }
 

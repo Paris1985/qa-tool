@@ -44,6 +44,6 @@ public class BaseTest {
     }
 
     public void after(Scenario scenario) {
-        webDriver = Driver.getInstance().getWebDriver();
+       Driver.getInstance().exit();
     }
 }
