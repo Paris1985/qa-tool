@@ -4,8 +4,8 @@ Feature: Login in practice site
     Given User is in the login page
     When User logins with valid credential
     Then User should be able to login
-#  @SmokeTest2
-#  Scenario: Login with invalid credential
-#    Given User is in the login page
-#    When User logins with invalid credential
-#    Then User should not be able to login
+  @SmokeTest2
+  Scenario: Login with invalid credential
+    Given User is in the login page
+    When User logins with invalid credential
+    Then User should not be able to login
