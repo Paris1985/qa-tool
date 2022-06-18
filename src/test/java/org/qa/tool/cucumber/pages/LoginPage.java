@@ -1,7 +1,6 @@
 package org.qa.tool.cucumber.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.qa.tool.cucumber.base.util.PageWait;
@@ -36,12 +35,9 @@ public class LoginPage extends BasePage {
         return webElement.getText();
     }
 
-    public String getLoginConfirmation1() {
-
-        WebElement webElement = PageWait.getInstance().waitForElementExist(By.xpath(logoutXpath),
-                Duration.ofSeconds(20),
-                Duration.ofSeconds(5),
-                NoSuchElementException.class);
-        return webElement.getText();
+    public void logout() {
+        WebElement logOutBtn = PageWait.getInstance().waitForElementExist(By.xpath(logoutXpath),
+                Duration.ofSeconds(20));
+        logOutBtn.click();
     }
 }

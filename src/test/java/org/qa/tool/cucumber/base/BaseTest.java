@@ -9,6 +9,7 @@ import org.qa.tool.cucumber.base.util.Driver;
 
 import java.util.Collection;
 
+
 public class BaseTest {
 
     protected WebDriver webDriver;
@@ -43,6 +44,6 @@ public class BaseTest {
     }
 
     public void after(Scenario scenario) {
-        webDriver = Driver.getInstance().getWebDriver();
+       Driver.getInstance().exit();
     }
 }

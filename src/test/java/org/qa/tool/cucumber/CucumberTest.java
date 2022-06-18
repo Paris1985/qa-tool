@@ -10,6 +10,7 @@ import org.qa.tool.cucumber.base.util.Driver;
         features = "classpath:features",
         glue = {"org.qa.tool.cucumber.steps"},
         plugin = {"pretty", "html:target/cucumber.html", "json:target/cucumber.json"}
+
 )
 public class CucumberTest extends AbstractTestNGCucumberTests {
     @AfterClass
