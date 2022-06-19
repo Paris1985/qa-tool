@@ -1,4 +1,4 @@
-package org.qa.tool.cucumber.steps;
+package org.qa.tool.cucumber.base.steps;
 
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;

@@ -53,7 +53,15 @@ public final class Driver {
         } else if ("saucelabs".equalsIgnoreCase(remote)) {
             confFile = "saucelabs.conf.json";
         } else if ("grid-local".equalsIgnoreCase(remote)) {
-            confFile = "local.conf.json";
+
+            try {
+                url = new URL("http://localhost:4444/");
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            this.webDriver = new RemoteWebDriver(url, capabilities);
+            this.sessionId = ((RemoteWebDriver) this.webDriver).getSessionId();
+            return this.webDriver;
         } else {
             if(StringUtils.isBlank(browser)) {
                 browser = DEFAULT_BROWSER;
@@ -114,7 +122,7 @@ public final class Driver {
         }
 
         url = new URL("https://" + username + ":" + accessKey + "@" + server);
-        System.out.println(url.toString());
+        System.out.println(url);
     }
 
 
@@ -125,8 +133,8 @@ public final class Driver {
         it = commonCapabilities.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<String, String> pair = it.next();
-            if (capabilities.getCapability(pair.getKey().toString()) == null) {
-                capabilities.setCapability(pair.getKey().toString(), pair.getValue().toString());
+            if (capabilities.getCapability(pair.getKey()) == null) {
+                capabilities.setCapability(pair.getKey(), pair.getValue());
             }
         }
     }
@@ -136,7 +144,7 @@ public final class Driver {
         Iterator<Map.Entry<String, String>> it = envCapabilities.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<String, String> pair = it.next();
-            capabilities.setCapability(pair.getKey().toString(), pair.getValue().toString());
+            capabilities.setCapability(pair.getKey(), pair.getValue());
         }
     }
 
@@ -145,9 +153,5 @@ public final class Driver {
             webDriver.quit();
             webDriver = null;
         }
-    }
-
-    public String getSessionId() {
-        return sessionId.toString();
     }
 }

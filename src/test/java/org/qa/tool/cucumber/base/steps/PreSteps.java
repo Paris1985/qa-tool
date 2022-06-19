@@ -1,4 +1,4 @@
-package org.qa.tool.cucumber.steps;
+package org.qa.tool.cucumber.base.steps;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;

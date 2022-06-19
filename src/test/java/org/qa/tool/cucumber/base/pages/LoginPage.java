@@ -1,4 +1,4 @@
-package org.qa.tool.cucumber.pages;
+package org.qa.tool.cucumber.base.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;

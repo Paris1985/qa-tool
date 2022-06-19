@@ -8,7 +8,7 @@ import org.qa.tool.cucumber.base.util.Driver;
 
 @CucumberOptions(
         features = "classpath:features",
-        glue = {"org.qa.tool.cucumber.steps"},
+        glue = {"org.qa.tool.cucumber.base.steps"},
         plugin = {"pretty", "html:target/cucumber.html", "json:target/cucumber.json"}
 
 )

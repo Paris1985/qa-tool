@@ -1,12 +1,10 @@
-
-package org.qa.tool.cucumber.steps;
+package org.qa.tool.cucumber.base.steps;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import org.qa.tool.cucumber.base.BaseTest;
-import org.qa.tool.cucumber.pages.LoginPage;
-
+import org.qa.tool.cucumber.base.pages.LoginPage;
 import static org.assertj.core.api.BDDAssertions.then;
 
 public class LoginSteps extends BaseTest {
