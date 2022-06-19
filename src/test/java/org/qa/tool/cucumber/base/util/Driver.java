@@ -4,6 +4,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -11,7 +12,9 @@ import org.openqa.selenium.remote.SessionId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.InvalidParameterException;
@@ -53,21 +56,9 @@ public final class Driver {
         } else if ("saucelabs".equalsIgnoreCase(remote)) {
             confFile = "saucelabs.conf.json";
         } else if ("grid-local".equalsIgnoreCase(remote)) {
-
-            try {
-                url = new URL("http://localhost:4444/");
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            this.webDriver = new RemoteWebDriver(url, capabilities);
-            this.sessionId = ((RemoteWebDriver) this.webDriver).getSessionId();
-            return this.webDriver;
+            return getWebDriverForLocalGrid(browser);
         } else {
-            if(StringUtils.isBlank(browser)) {
-                browser = DEFAULT_BROWSER;
-            }
-            this.webDriver = WebDriverManager.getInstance(browser).create();
-            return this.webDriver;
+            return getWebDriver(browser);
         }
 
         if (StringUtils.isBlank(confFile)) {
@@ -77,6 +68,41 @@ public final class Driver {
         setProperties(confFile, browser);
         this.webDriver = new RemoteWebDriver(url, capabilities);
         this.sessionId = ((RemoteWebDriver) this.webDriver).getSessionId();
+        return this.webDriver;
+    }
+
+    private WebDriver getWebDriver(String browser) {
+        if (StringUtils.isBlank(browser)) {
+            browser = DEFAULT_BROWSER;
+        }
+        this.webDriver = WebDriverManager.getInstance(browser).create();
+        return this.webDriver;
+    }
+
+    private WebDriver getWebDriverForLocalGrid(String browser) {
+        String confFile;
+        confFile = "local.grid.conf.json";
+        try {
+            JSONParser parser = new JSONParser();
+
+            JSONObject config = (JSONObject) parser.parse(new FileReader("src/test/resources/conf/" + confFile));
+            JSONObject envs = (JSONObject) config.get("environments");
+
+            setEnvCapabilities(envs, capabilities, browser);
+            setCommonCapabilities(config, capabilities);
+
+            url = new URL((String) config.get("server"));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        this.webDriver = new RemoteWebDriver(url, capabilities);
         return this.webDriver;
     }
 
@@ -99,8 +125,8 @@ public final class Driver {
 
     private void setRemoteUrl(JSONObject config) throws MalformedURLException {
         String username = System.getProperty("USERNAME");
-        if(username == null) {
-            username = System.getenv("USERNAME") ;
+        if (username == null) {
+            username = System.getenv("USERNAME");
         }
         String accessKey = System.getProperty("ACCESS_KEY");
         if (accessKey == null) {

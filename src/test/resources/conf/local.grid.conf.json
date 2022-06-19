@@ -8,17 +8,17 @@
 
   "environments": {
     "chrome": {
-      "browser": "chrome"
+      "browserName": "chrome"
     },
     "firefox": {
-      "browser": "firefox"
+      "browserName": "firefox"
     },
     "safari": {
       "os": "OS X",
-      "browser": "safari"
+      "browserName": "safari"
     },
     "ie": {
-      "browser": "internet explorer"
+      "browserName": "internet explorer"
     },
     "edge": {
       "browserName": "MicrosoftEdge"
