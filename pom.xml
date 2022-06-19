@@ -13,29 +13,29 @@
         <maven.compiler.target>11</maven.compiler.target>
         <slf4j.version>1.7.36</slf4j.version>
         <logback.version>1.2.11</logback.version>
-        <selenium.version>4.1.2</selenium.version>
-        <testng.version>7.5</testng.version>
-        <assertj.version>3.22.0</assertj.version>
-        <wdm.version>5.1.0</wdm.version>
-        <htmlunit.version>3.60.0</htmlunit.version>
+        <selenium.version>4.2.1</selenium.version>
+        <testng.version>7.6.0</testng.version>
+        <assertj.version>3.23.1</assertj.version>
+        <wdm.version>5.2.0</wdm.version>
+        <htmlunit.version>3.62.0</htmlunit.version>
         <awaitility.version>4.2.0</awaitility.version>
         <browsermob.version>2.1.5</browsermob.version>
         <zapclient.version>1.10.0</zapclient.version>
         <axel.version>4.4.1</axel.version>
         <javafaker.version>1.0.2</javafaker.version>
-        <selenide.version>6.3.5</selenide.version>
+        <selenide.version>6.6.3</selenide.version>
         <extentreports.version>5.0.9</extentreports.version>
-        <allure.version>2.17.3</allure.version>
+        <allure.version>2.18.1</allure.version>
         <allure-maven.version>2.11.2</allure-maven.version>
-        <cucumber.version>7.2.3</cucumber.version>
-        <spring-boot.version>2.6.6</spring-boot.version>
-        <appium.version>8.0.0</appium.version>
-        <rest-assured.version>5.0.0</rest-assured.version>
+        <cucumber.version>7.3.3</cucumber.version>
+        <spring-boot.version>2.7.0</spring-boot.version>
+        <appium.version>8.1.1</appium.version>
+        <rest-assured.version>5.1.1</rest-assured.version>
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
         <project.encondig>UTF-8</project.encondig>
         <project.build.sourceEncoding>${project.encondig}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${project.encondig}</project.reporting.outputEncoding>
-        <sauce.version>1.2.0</sauce.version>
+        <sauce.version>1.2.1</sauce.version>
     </properties>
 
     <dependencies>
@@ -226,7 +226,7 @@
         <dependency>
             <groupId>com.browserstack</groupId>
             <artifactId>browserstack-local-java</artifactId>
-            <version>1.0.3</version>
+            <version>1.0.6</version>
         </dependency>
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
@@ -263,13 +263,6 @@
                 <artifactId>allure-maven</artifactId>
                 <version>${allure-maven.version}</version>
             </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot.version}</version>
-            </plugin>
         </plugins>
     </build>
-
-
 </project>

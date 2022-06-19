@@ -6,7 +6,6 @@ import io.cucumber.java.Scenario;
 import org.openqa.selenium.WebDriver;
 import org.qa.tool.cucumber.base.util.Driver;
 
-
 import java.util.Collection;
 
 
