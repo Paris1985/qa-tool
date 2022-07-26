@@ -18,6 +18,10 @@ public abstract class BaseTest {
         setTags(scenario);
         webDriver = Driver.getInstance().getWebDriver();
     }
+    public void before(String scenario) {
+        Driver.getInstance().setDesiredCapability("name", scenario);
+        webDriver = Driver.getInstance().getWebDriver();
+    }
 
     private void setTags(Scenario scenario) {
         Collection<String> sourceTagNames = scenario.getSourceTagNames();

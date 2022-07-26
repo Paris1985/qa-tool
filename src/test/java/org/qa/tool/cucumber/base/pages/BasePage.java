@@ -6,12 +6,14 @@ import org.openqa.selenium.support.PageFactory;
 import org.qa.tool.cucumber.base.util.Driver;
 
 public abstract class BasePage {
-    protected String url;
+    private String url;
     protected WebDriver webDriver;
 
-    public BasePage() {
+    public BasePage(String url) {
+        this.url = url;
         webDriver = Driver.getInstance().getWebDriver();
         PageFactory.initElements(webDriver, this);
+        webDriver.get(this.url);
     }
 
 }

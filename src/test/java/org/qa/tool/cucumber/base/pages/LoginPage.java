@@ -19,8 +19,7 @@ public class LoginPage extends BasePage {
     private WebElement submitBtn;
 
     public LoginPage() {
-        url = "https://shop.demoqa.com/my-account/";
-        webDriver.get(url);
+        super("https://shop.demoqa.com/my-account/");
     }
 
     public void login(String username, String password) {
