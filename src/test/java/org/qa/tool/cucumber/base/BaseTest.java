@@ -9,7 +9,7 @@ import org.qa.tool.cucumber.base.util.Driver;
 import java.util.Collection;
 
 
-public class BaseTest {
+public abstract class BaseTest {
 
     protected WebDriver webDriver;
 

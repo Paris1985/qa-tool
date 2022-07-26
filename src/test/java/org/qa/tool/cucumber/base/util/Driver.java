@@ -9,10 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.SessionId;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -23,14 +20,13 @@ import java.util.Map;
 
 public final class Driver {
 
-    private Logger logger = LoggerFactory.getLogger(Driver.class);
-    private static String DEFAULT_BROWSER = "chrome";
+    private static final String DEFAULT_BROWSER = "chrome";
 
     private final static Driver browser = new Driver();
     private WebDriver webDriver;
     private URL url;
     private SessionId sessionId;
-    private DesiredCapabilities capabilities = new DesiredCapabilities();
+    private final DesiredCapabilities capabilities = new DesiredCapabilities();
 
     private Driver() {
     }
@@ -49,7 +45,7 @@ public final class Driver {
 
         String remote = System.getProperty("REMOTE");
         String browser = System.getProperty("BROWSER");
-        String confFile = "";
+        String confFile;
 
         if ("browserstack".equalsIgnoreCase(remote)) {
             confFile = "browser_stack.conf.json";
@@ -92,13 +88,7 @@ public final class Driver {
             setCommonCapabilities(config, capabilities);
 
             url = new URL((String) config.get("server"));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
 
@@ -109,7 +99,7 @@ public final class Driver {
     private void setProperties(String conf, String browser) {
 
         JSONParser parser = new JSONParser();
-        JSONObject config = null;
+        JSONObject config;
         try {
             config = (JSONObject) parser.parse(new FileReader("src/test/resources/conf/" + conf));
             JSONObject envs = (JSONObject) config.get("environments");

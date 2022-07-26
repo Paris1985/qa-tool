@@ -10,7 +10,7 @@ import java.time.Duration;
 
 public class LoginPage extends BasePage {
 
-    private String logoutXpath = "//*[@id=\"post-8\"]/div/div/nav/ul/li[6]/a";
+    private final String logoutXpath = "//*[@id=\"post-8\"]/div/div/nav/ul/li[6]/a";
     @FindBy(id = "username")
     private WebElement usernameTxt;
     @FindBy(id = "password")

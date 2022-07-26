@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.qa.tool.cucumber.base.util.Driver;
 
-public class BasePage {
+public abstract class BasePage {
     protected String url;
     protected WebDriver webDriver;
 
