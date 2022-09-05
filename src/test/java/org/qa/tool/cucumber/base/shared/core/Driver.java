@@ -1,4 +1,4 @@
-package org.qa.tool.cucumber.base.util;
+package org.qa.tool.cucumber.base.shared.core;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.lang3.StringUtils;

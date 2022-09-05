@@ -4,7 +4,7 @@ package org.qa.tool.cucumber.base;
 import com.google.gson.Gson;
 import io.cucumber.java.Scenario;
 import org.openqa.selenium.WebDriver;
-import org.qa.tool.cucumber.base.util.Driver;
+import org.qa.tool.cucumber.base.shared.core.Driver;
 
 import java.util.Collection;
 

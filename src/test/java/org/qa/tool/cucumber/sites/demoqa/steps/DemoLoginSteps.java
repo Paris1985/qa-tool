@@ -1,19 +1,19 @@
-package org.qa.tool.cucumber.base.steps;
+package org.qa.tool.cucumber.sites.demoqa.steps;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import org.qa.tool.cucumber.base.BaseTest;
-import org.qa.tool.cucumber.base.pages.LoginPage;
+import org.qa.tool.cucumber.sites.demoqa.page.DemoLoginPage;
 import static org.assertj.core.api.BDDAssertions.then;
 
-public class LoginSteps extends BaseTest {
+public class DemoLoginSteps extends BaseTest {
 
-    private LoginPage loginPage;
+    private DemoLoginPage loginPage;
 
     @Given("User is in the login page")
     public void goToLogin() {
-        loginPage = new LoginPage();
+        loginPage = new DemoLoginPage();
     }
 
     @When("User logins with valid credential")

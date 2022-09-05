@@ -27,6 +27,26 @@ ie
 <strong>browserstack:</strong> hub-cloud.browserstack.com/wd/hub <br>
 <strong>saucelabs:</strong> ondemand.eu-central-1.saucelabs.com:443/wd/hub
 
+# 9. List of websites to practice selenium
+https://phptravels.com/demo/
+https://s1.demo.opensourcecms.com/wordpress/
+https://www.hubspot.com/
+https://www.gumtree.com/
+https://mailchimp.com/
+https://www.freshworks.com
+https://www.vtiger.com
 
 
-
+# 9. Supported Properties
+cucumber.ansi-colors.disabled=  # true or false. default: false
+cucumber.execution.dry-run=     # true or false. default: false
+cucumber.execution.limit=       # number of scenarios to execute (CLI only).
+cucumber.execution.order=       # lexical, reverse, random or random:[seed] (CLI only). default: lexical
+cucumber.execution.wip=         # true or false. default: false.
+cucumber.features=              # comma separated paths to feature files. example: path/to/example.feature, path/to/other.feature
+cucumber.filter.name=           # regex. example: .*Hello.*
+cucumber.filter.tags=           # tag expression. example: @smoke and not @slow
+cucumber.glue=                  # comma separated package names. example: com.example.glue
+cucumber.plugin=                # comma separated plugin strings. example: pretty, json:path/to/report.json
+cucumber.object-factory=        # object factory class name. example: com.example.MyObjectFactory
+cucumber.snippet-type=          # underscore or camelcase. default: underscore

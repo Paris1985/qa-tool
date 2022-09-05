@@ -1,4 +1,4 @@
-package org.qa.tool.cucumber.base.util;
+package org.qa.tool.cucumber.base.shared.core;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

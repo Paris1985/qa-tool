@@ -3,7 +3,7 @@ package org.qa.tool.cucumber.base.pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
-import org.qa.tool.cucumber.base.util.Driver;
+import org.qa.tool.cucumber.base.shared.core.Driver;
 
 public abstract class BasePage {
     private String url;
